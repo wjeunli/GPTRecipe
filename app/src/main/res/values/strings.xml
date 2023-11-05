@@ -8,6 +8,7 @@
     <string name="recipe_ingredient_hint">Enter ingredients for the recipe.</string>
     <string name="recipe_ingredient_label">Ingredient</string>
     <string name="recipe_details_label">Details</string>
+    <string name="recipe_generated_detail_label">Generated Recipe</string>
     <string name="recipe_delicious_label">Delicious!</string>
     <string name="recipe_regenerate_text">GPT generate</string>
     <string name="recipe_summary_text">Send Recipe Summary</string>

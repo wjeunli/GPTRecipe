@@ -100,4 +100,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/recipe_summary_text" />
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:id="@+id/recipe_generated_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/recipe_generated_detail_label" />
 </LinearLayout>

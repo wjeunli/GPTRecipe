@@ -58,6 +58,7 @@ public class RecipeFragment extends Fragment {
     private Button mGenerateButton;
     private ImageView mPhotoView;
     private ImageButton mPhotoButton;
+    private TextView mRecipeText;
     private File mPhotoFile;
     private GPTGenerateService mService;
 
@@ -266,11 +267,14 @@ public class RecipeFragment extends Fragment {
                         mRecipe.setContent(content);
                         updateRecipe();
                     }
+
+                    mRecipeText.setText(content);
                 }
             }
         });
+
         if (mRecipe.getContent() != null) {
-            mGenerateButton.setText(mRecipe.getContent());
+            mRecipeText.setText(mRecipe.getContent());
         }
 
         mPhotoButton = v.findViewById(R.id.recipe_camera);
@@ -318,29 +322,7 @@ public class RecipeFragment extends Fragment {
             mRecipe.setDate(date);
             updateRecipe();
             updateDate();
-        } else if (requestCode == REQUEST_CONTACT && data != null) {
-            Uri uri = data.getData();
-            String[] queryField = new String[]{
-                    ContactsContract.Contacts.DISPLAY_NAME
-            };
-
-            Cursor cursor = getActivity().getContentResolver().query(uri, queryField, null, null, null);
-
-            try {
-                if (cursor.getCount() == 0) {
-                    return;
-                }
-
-                cursor.moveToFirst();
-                String suspect = cursor.getString(0);
-                mRecipe.setContent(suspect);
-                updateRecipe();
-                mGenerateButton.setText(suspect);
-            } finally {
-                cursor.close();
-            }
-
-        } else if (requestCode == REQUEST_PHOTO) {
+        }  else if (requestCode == REQUEST_PHOTO) {
             Uri uri = FileProvider.getUriForFile(getActivity(),
                     "com.leeplay.internetcrime.fileprovider",
                     mPhotoFile
