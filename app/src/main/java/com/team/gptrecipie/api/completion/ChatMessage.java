@@ -1,4 +1,4 @@
-package com.team.gptrecipie.model.completion;
+package com.team.gptrecipie.api.completion;
 
 public class ChatMessage {
     private String mRole;

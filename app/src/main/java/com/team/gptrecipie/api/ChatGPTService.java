@@ -1,9 +1,9 @@
 package com.team.gptrecipie.api;
 
-import com.team.gptrecipie.model.completion.ChatMessage;
-import com.team.gptrecipie.model.completion.RequestCompletion;
-import com.team.gptrecipie.model.completion.ResponseChoice;
-import com.team.gptrecipie.model.completion.ResponseCompletion;
+import com.team.gptrecipie.api.completion.ChatMessage;
+import com.team.gptrecipie.api.completion.RequestCompletion;
+import com.team.gptrecipie.api.completion.ResponseChoice;
+import com.team.gptrecipie.api.completion.ResponseCompletion;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,13 +21,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ChatGPTService {
 
     private static final String GPT_KEY = "sk-UWjMmHr3qa9if5MN8q4bWeAmUak2gQ3SuwqVLZizI5dAYFRC";
-    private static final String GPT_URL = "https://api.chatanywhere.cn/v1";
-    private ChatGPTService instance;
+    private static final String GPT_URL = "https://api.chatanywhere.cn/v1/";
+    private static ChatGPTService instance;
     private Retrofit mRetrofit;
     private ChatGptApi service;
 
 
-    public ChatGPTService getInstance() {
+    public static ChatGPTService getInstance() {
         if (instance == null) {
             instance = new ChatGPTService();
         }
@@ -63,7 +63,7 @@ public class ChatGPTService {
         service = mRetrofit.create(ChatGptApi.class);
     }
 
-    List<ChatMessage> defaultChatRequest(List<ChatMessage> messages) throws IOException {
+    public List<ChatMessage> defaultChatRequest(List<ChatMessage> messages) throws IOException {
         RequestCompletion completion = new RequestCompletion();
         completion.setModel("gpt-3.5-turbo");
         completion.setMessages(messages);
@@ -79,7 +79,7 @@ public class ChatGPTService {
         return responses;
     }
 
-    ResponseCompletion defaultChatRequest(List<ChatMessage> messages, Callback<ResponseCompletion> callback) throws IOException {
+    public ResponseCompletion defaultChatRequest(List<ChatMessage> messages, Callback<ResponseCompletion> callback) throws IOException {
         RequestCompletion completion = new RequestCompletion();
         completion.setModel("gpt-3.5-turbo");
         completion.setMessages(messages);
