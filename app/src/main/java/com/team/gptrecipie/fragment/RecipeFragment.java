@@ -14,9 +14,11 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -88,16 +90,23 @@ public class RecipeFragment extends Fragment {
         } else {
             deliciousString = getString(R.string.recipe_summary_not_delicious);
         }
-        String dateString = DateFormat.format("EEE, MMM dd", mRecipe.getDate()).toString();
+        String dateString = DateFormat.format("yyyy/MM/dd HH:mm:ss", mRecipe.getDate()).toString();
 
-        String gptContent = mRecipe.getContent();
-        if (gptContent == null) {
-            gptContent = getString(R.string.recipe_summary_no_content);
+        String ingredientString = mRecipe.getIngredient();
+        if (ingredientString == null) {
+            ingredientString = getString(R.string.recipe_summary_no_ingredient);
         } else {
-            gptContent = getString(R.string.recipe_summary_content, gptContent);
+            ingredientString = getString(R.string.recipe_summary_ingredient, ingredientString);
         }
 
-        String report = getString(R.string.recipe_summary, mRecipe.getTitle(), dateString, deliciousString, gptContent);
+        String gptContentString = mRecipe.getContent();
+        if (gptContentString == null) {
+            gptContentString = getString(R.string.recipe_summary_no_content);
+        } else {
+            gptContentString = getString(R.string.recipe_summary_content, gptContentString);
+        }
+
+        String report = getString(R.string.recipe_summary, mRecipe.getTitle(), dateString, deliciousString, ingredientString, gptContentString);
         return report;
 
     }
@@ -193,6 +202,21 @@ public class RecipeFragment extends Fragment {
 
         mIngredientText = v.findViewById(R.id.recipe_ingredient);
         mIngredientText.setText(mRecipe.getIngredient());
+
+        mIngredientText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // User has finished inputting text
+                    String userInput = mIngredientText.getText().toString();
+                    mRecipe.setIngredient(userInput);
+                    updateRecipe();
+                    return true; // Consume the event
+                }
+
+                return false;
+            }
+        });
         mIngredientText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -330,7 +354,7 @@ public class RecipeFragment extends Fragment {
     }
 
     private void updateDate() {
-        mDateButton.setText(DateFormat.format("yyyy MM dd", mRecipe.getDate()).toString());
+        mDateButton.setText(DateFormat.format("yyyy/MM/dd HH:mm:ss", mRecipe.getDate()).toString());
     }
 
     private void updateRecipe() {

@@ -15,13 +15,16 @@
     <string name="crime_report_subject">CriminalIntent Crime Report</string>
 
     <string name="recipe_summary_delicious">The recipe is proved delicious</string>
-    <string name="recipe_summary_not_delicious">The recipe is proved not delicious</string>
+    <string name="recipe_summary_not_delicious">The recipe is not proved delicious</string>
+    <string name="recipe_summary_no_ingredient">There is no ingredients.</string>
+    <string name="recipe_summary_ingredient">The Ingredient is: \n%s.</string>
     <string name="recipe_summary_no_content">There is no GPT generated recipe.</string>
-    <string name="recipe_summary_content">The GPT generated recipe is \n %s.</string>
-    <string name="recipe_summary">%1$s!
-        The Recipe was discovered by %2$s.
-        Which is %3$s
-        and %4$s
+    <string name="recipe_summary_content">The GPT generated recipe is: \n%s.</string>
+    <string name="recipe_summary">%1$s\n
+        The Recipe was invented in %2$s.
+        \n%3$s
+        \n%4$s
+        \n%5$s
     </string>
     <!-- String for Dialogs-->
     <string name="date_picker_title">Recipe Created Date:</string>

@@ -9,7 +9,7 @@ class RecipeDbSchema {
             public static final String TITLE = "title";
             public static final String DATE = "date";
             public static final String DELICIOUS = "delicious";
-            public static final String CONTENT = "suspect";
+            public static final String CONTENT = "content";
             public static final String INGREDIENT = "ingredient";
 
         }
