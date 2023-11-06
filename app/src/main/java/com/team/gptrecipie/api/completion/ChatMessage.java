@@ -1,22 +1,22 @@
 package com.team.gptrecipie.api.completion;
 
 public class ChatMessage {
-    private String mRole;
-    private String mContent;
+    private String role;
+    private String content;
 
     public String getRole() {
-        return mRole;
+        return role;
     }
 
     public void setRole(String role) {
-        mRole = role;
+        this.role = role;
     }
 
     public String getContent() {
-        return mContent;
+        return content;
     }
 
     public void setContent(String content) {
-        mContent = content;
+        this.content = content;
     }
 }

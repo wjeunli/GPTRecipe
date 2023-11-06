@@ -3,50 +3,50 @@ package com.team.gptrecipie.api.completion;
 import java.util.List;
 
 public class ResponseCompletion {
-    private String mId;
-    private String mObject;
-    private long mCreated;
-    private String mModel;
+    private String id;
+    private String object;
+    private long created;
+    private String model;
 
-    private List<ResponseChoice> mChoices;
+    private List<ResponseChoice> choices;
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public String getObject() {
-        return mObject;
+        return object;
     }
 
     public void setObject(String object) {
-        mObject = object;
+        this.object = object;
     }
 
     public long getCreated() {
-        return mCreated;
+        return created;
     }
 
     public void setCreated(long created) {
-        mCreated = created;
+        this.created = created;
     }
 
     public String getModel() {
-        return mModel;
+        return model;
     }
 
     public void setModel(String model) {
-        mModel = model;
+        this.model = model;
     }
 
     public List<ResponseChoice> getChoices() {
-        return mChoices;
+        return choices;
     }
 
     public void setChoices(List<ResponseChoice> choices) {
-        mChoices = choices;
+        this.choices = choices;
     }
 }

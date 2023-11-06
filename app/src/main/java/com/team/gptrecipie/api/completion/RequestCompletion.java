@@ -3,49 +3,40 @@ package com.team.gptrecipie.api.completion;
 import java.util.List;
 
 public class RequestCompletion {
-    private List<ChatMessage> mMessages;
-    private String mModel;
-    private float mFrequencyPenalty;
-    private String mFunctionCall;
-    private String mUser;
+    private List<ChatMessage> messages;
+    private String model;
+    private String functionCall;
+    private String user;
 
     public List<ChatMessage> getMessages() {
-        return mMessages;
+        return messages;
     }
 
     public void setMessages(List<ChatMessage> messages) {
-        mMessages = messages;
+        this.messages = messages;
     }
 
     public String getModel() {
-        return mModel;
+        return model;
     }
 
     public void setModel(String model) {
-        mModel = model;
-    }
-
-    public float getFrequencyPenalty() {
-        return mFrequencyPenalty;
-    }
-
-    public void setFrequencyPenalty(float frequencyPenalty) {
-        mFrequencyPenalty = frequencyPenalty;
+        this.model = model;
     }
 
     public String getFunctionCall() {
-        return mFunctionCall;
+        return functionCall;
     }
 
     public void setFunctionCall(String functionCall) {
-        mFunctionCall = functionCall;
+        this.functionCall = functionCall;
     }
 
     public String getUser() {
-        return mUser;
+        return user;
     }
 
     public void setUser(String user) {
-        mUser = user;
+        this.user = user;
     }
 }

@@ -1,16 +1,16 @@
 package com.team.gptrecipie.api.completion;
 
 public class ResponseChoice {
-    private int mIndex;
+    private int index;
     private String finishReason;
-    private ChatMessage mMessages;
+    private ChatMessage message;
 
     public int getIndex() {
-        return mIndex;
+        return index;
     }
 
     public void setIndex(int index) {
-        mIndex = index;
+        this.index = index;
     }
 
     public String getFinishReason() {
@@ -21,11 +21,11 @@ public class ResponseChoice {
         this.finishReason = finishReason;
     }
 
-    public ChatMessage getMessages() {
-        return mMessages;
+    public ChatMessage getMessage() {
+        return message;
     }
 
-    public void setMessages(ChatMessage messages) {
-        mMessages = messages;
+    public void setMessage(ChatMessage message) {
+        this.message = message;
     }
 }

@@ -1,5 +1,6 @@
 package com.team.gptrecipie.api;
 
+import com.google.gson.Gson;
 import com.team.gptrecipie.api.completion.ChatMessage;
 import com.team.gptrecipie.api.completion.RequestCompletion;
 import com.team.gptrecipie.api.completion.ResponseChoice;
@@ -8,6 +9,7 @@ import com.team.gptrecipie.api.completion.ResponseCompletion;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -21,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ChatGPTService {
 
     private static final String GPT_KEY = "sk-UWjMmHr3qa9if5MN8q4bWeAmUak2gQ3SuwqVLZizI5dAYFRC";
-    private static final String GPT_URL = "https://api.chatanywhere.cn/v1/";
+    private static final String GPT_URL = "https://api.chatanywhere.cn/v1/chat/";
     private static ChatGPTService instance;
     private Retrofit mRetrofit;
     private ChatGptApi service;
@@ -51,6 +53,10 @@ public class ChatGPTService {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         return builder
                 .addInterceptor(new GPTInterceptor())
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .callTimeout(100, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .build();
     }
 
@@ -73,20 +79,18 @@ public class ChatGPTService {
         ResponseCompletion responseCompletion = responseCall.execute().body();
         List<ChatMessage> responses = new ArrayList<>();
         for (ResponseChoice choice : responseCompletion.getChoices()) {
-            responses.add(choice.getMessages());
+            responses.add(choice.getMessage());
         }
 
         return responses;
     }
 
-    public ResponseCompletion defaultChatRequest(List<ChatMessage> messages, Callback<ResponseCompletion> callback) throws IOException {
+    public void defaultChatRequest(List<ChatMessage> messages, Callback<ResponseCompletion> callback) throws IOException {
         RequestCompletion completion = new RequestCompletion();
         completion.setModel("gpt-3.5-turbo");
         completion.setMessages(messages);
 
         Call<ResponseCompletion> responseCall = service.getChatResponse(completion);
         responseCall.enqueue(callback);
-
-        return responseCall.execute().body();
     }
 }

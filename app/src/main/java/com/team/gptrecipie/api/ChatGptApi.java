@@ -10,7 +10,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface ChatGptApi {
-    @POST("chat/completions")
+    @POST("completions")
     @Headers("Content-Type: application/json")
     Call<ResponseCompletion> getChatResponse(@Body() RequestCompletion request);
 }

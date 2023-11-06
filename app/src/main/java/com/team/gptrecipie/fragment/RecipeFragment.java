@@ -8,6 +8,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
@@ -150,6 +151,33 @@ public class RecipeFragment extends Fragment {
 
     private static final String DIALOG_DATE = "DialogDate";
 
+    private class GetGPTTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+            // Perform your network operation here, e.g., making an HTTP request
+            // Return the result or data you want to display in the UI
+            // intent.addCategory(Intent.CATEGORY_HOME);
+            String result = mRecipe.getContent();
+            if (mRecipe.getIngredient() == null) {
+                mGenerateButton.setEnabled(false);
+            } else {
+                String content = mService.generateContent(mRecipe);
+                if (content != null) {
+                    mRecipe.setContent(content);
+                    updateRecipe();
+                }
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // Update the UI with the result of the network operation
+            mRecipeText.setText(result);
+        }
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -257,19 +285,8 @@ public class RecipeFragment extends Fragment {
         mGenerateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // intent.addCategory(Intent.CATEGORY_HOME);
-                if (mRecipe.getIngredient() == null) {
-                    mGenerateButton.setEnabled(false);
-                } else {
-                    String content = mService.generateContent(mRecipe);
-                    if (content != null) {
-                        mRecipe.setContent(content);
-                        updateRecipe();
-                    }
-
-                    mRecipeText.setText(content);
-                }
+               //TODO
+                mService.generateContent(mRecipe);
             }
         });
 
