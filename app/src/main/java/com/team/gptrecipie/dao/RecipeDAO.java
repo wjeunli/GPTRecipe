@@ -59,14 +59,16 @@ public class RecipeDAO {
             String uuid = getString(getColumnIndex(RecipeTable.Columns.UUID));
             String title = getString(getColumnIndex(RecipeTable.Columns.TITLE));
             long date = getLong(getColumnIndex(RecipeTable.Columns.DATE));
-            int solved = getInt(getColumnIndex(RecipeTable.Columns.DELICIOUS));
-            String suspect = getString(getColumnIndex(RecipeTable.Columns.CONTENT));
+            int delicious = getInt(getColumnIndex(RecipeTable.Columns.DELICIOUS));
+            String ingredient = getString(getColumnIndex(RecipeTable.Columns.INGREDIENT));
+            String content = getString(getColumnIndex(RecipeTable.Columns.CONTENT));
 
             Recipe recipe = new Recipe(UUID.fromString(uuid));
             recipe.setTitle(title);
             recipe.setDate(new Date(date));
-            recipe.setDelicious(solved != 0);
-            recipe.setContent(suspect);
+            recipe.setDelicious(delicious != 0);
+            recipe.setContent(content);
+            recipe.setIngredient(ingredient);
 
             return recipe;
         }

@@ -13,7 +13,8 @@
     <string name="recipe_regenerate_text">GPT generate</string>
     <string name="recipe_summary_text">Send Recipe Summary</string>
     <string name="share_recipe">Share recipe via</string>
-    <string name="crime_report_subject">CriminalIntent Crime Report</string>
+    <string name="recipe_report_subject">Recipe summary Report</string>
+    <string name="recipe_wait_api_sending_text">Generating.........</string>
 
     <string name="recipe_summary_delicious">The recipe is proved delicious</string>
     <string name="recipe_summary_not_delicious">The recipe is not proved delicious</string>

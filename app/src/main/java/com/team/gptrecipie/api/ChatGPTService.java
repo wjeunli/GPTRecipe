@@ -55,8 +55,8 @@ public class ChatGPTService {
                 .addInterceptor(new GPTInterceptor())
                 .connectTimeout(100, TimeUnit.SECONDS)
                 .callTimeout(100, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(100, TimeUnit.SECONDS)
+                .writeTimeout(100, TimeUnit.SECONDS)
                 .build();
     }
 

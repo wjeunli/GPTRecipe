@@ -5,21 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
-import android.view.KeyEvent;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -175,9 +172,14 @@ public class RecipeFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             // Update the UI with the result of the network operation
-            mRecipeText.setText(result);
+            updateUI();
+            if (mGenerateButton != null) {
+                mGenerateButton.setEnabled(true);
+            }
+
         }
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -196,8 +198,10 @@ public class RecipeFragment extends Fragment {
             }
         });
 
-        mDetailText = v.findViewById(R.id.recipe_detail);
-        mDetailText.setText(getRecipeSummary());
+        mRecipeText = v.findViewById(R.id.recipe_generated_detail);
+        mRecipeText.setMovementMethod(new ScrollingMovementMethod());
+        /*mDetailText = v.findViewById(R.id.recipe_detail);
+        mDetailText.setText(getRecipeSummary());*/
 
         mDeliciousCheckBox = v.findViewById(R.id.recipe_delicious);
         mDeliciousCheckBox.setChecked(mRecipe.isDelicious());
@@ -232,7 +236,7 @@ public class RecipeFragment extends Fragment {
         mIngredientText = v.findViewById(R.id.recipe_ingredient);
         mIngredientText.setText(mRecipe.getIngredient());
 
-        mIngredientText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        /*mIngredientText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -245,7 +249,7 @@ public class RecipeFragment extends Fragment {
 
                 return false;
             }
-        });
+        });*/
         mIngredientText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -265,7 +269,6 @@ public class RecipeFragment extends Fragment {
         });
 
 
-
         mShareButton = v.findViewById(R.id.recipe_summary);
         mShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,7 +276,7 @@ public class RecipeFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, getRecipeSummary());
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.crime_report_subject));
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.recipe_report_subject));
 
                 Intent.createChooser(intent, getString(R.string.share_recipe));
                 startActivity(intent);
@@ -285,8 +288,12 @@ public class RecipeFragment extends Fragment {
         mGenerateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //TODO
-                mService.generateContent(mRecipe);
+                //TODO
+                GetGPTTask task = new GetGPTTask();
+                task.execute();
+                mGenerateButton.setEnabled(false);
+                mRecipeText.setText(getString(R.string.recipe_wait_api_sending_text));
+                //mService.generateContent(mRecipe);
             }
         });
 
@@ -328,6 +335,14 @@ public class RecipeFragment extends Fragment {
 
     }
 
+    public void updateUI() {
+        mTitleText.setText(mRecipe.getTitle());
+        mIngredientText.setText(mRecipe.getIngredient());
+        mRecipeText.setText(mRecipe.getContent());
+        updateDate();
+        updatePhotoView();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode != Activity.RESULT_OK) {
@@ -339,9 +354,9 @@ public class RecipeFragment extends Fragment {
             mRecipe.setDate(date);
             updateRecipe();
             updateDate();
-        }  else if (requestCode == REQUEST_PHOTO) {
+        } else if (requestCode == REQUEST_PHOTO) {
             Uri uri = FileProvider.getUriForFile(getActivity(),
-                    "com.leeplay.internetcrime.fileprovider",
+                    "com.team.gptrecipie.fileprovider",
                     mPhotoFile
             );
 

@@ -21,14 +21,13 @@ public class GPTGenerateService {
     private ChatGPTService mChatGPTService = ChatGPTService.getInstance();
 
     private static final String TEMPLATE = "I have %s ingredients, please give me a delicious recipe restricted to the ingredient";
-    public String generateContent(Recipe recipe) {
+    public String asyncGenerateContent(Recipe recipe) {
         // TODO ingredient can be verified and rechecked
         List<ChatMessage> requests = new ArrayList();
         ChatMessage message = new ChatMessage();
         message.setRole("user");
         message.setContent(String.format(TEMPLATE, recipe.getIngredient()));
         requests.add(message);
-
         try {
             Callback<ResponseCompletion> callback = new Callback<ResponseCompletion>() {
                 @Override
@@ -55,6 +54,28 @@ public class GPTGenerateService {
             /*if (rets != null & rets.size() > 0) {
                 return rets.get(0).getContent();
             }*/
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+    public String generateContent(Recipe recipe) {
+        // TODO ingredient can be verified and rechecked
+        List<ChatMessage> requests = new ArrayList();
+        ChatMessage message = new ChatMessage();
+        message.setRole("user");
+        message.setContent(String.format(TEMPLATE, recipe.getIngredient()));
+        requests.add(message);
+
+        try {
+
+
+            List<ChatMessage> messages = mChatGPTService.defaultChatRequest(requests);
+            if (messages != null & !messages.isEmpty()) {
+                return messages.get(0).getContent();
+            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
