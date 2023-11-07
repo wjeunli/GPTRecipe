@@ -2,8 +2,10 @@ package com.team.gptrecipie.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.team.gptrecipie.R;
+import com.team.gptrecipie.SplashActivity;
+import com.team.gptrecipie.activity.Login;
 import com.team.gptrecipie.activity.RecipeActivity;
+import com.team.gptrecipie.activity.RecipeListActivity;
+import com.team.gptrecipie.activity.Signup;
 import com.team.gptrecipie.dao.RecipeDAO;
 import com.team.gptrecipie.model.Recipe;
 
@@ -60,6 +66,15 @@ import java.util.UUID;
         mRecyclerView = view.findViewById(R.id.recycler_recipe_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        SharedPreferences userSession = getActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+        boolean isAuthenticated = userSession.getBoolean("isAuthenticated", false);
+
+        final Intent intent;
+        if (isAuthenticated == false) {
+            intent = new Intent(getActivity(), Signup.class);
+            startActivity(intent);
+        }
+
         if (savedInstanceState != null) {
             mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
@@ -85,12 +100,12 @@ import java.util.UUID;
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_recipe, menu);
 
-        MenuItem subtitleItem = menu.findItem(R.id.show_subtitle);
+        /*MenuItem subtitleItem = menu.findItem(R.id.show_subtitle);
         if (mSubtitleVisible) {
             subtitleItem.setTitle(R.string.hide_subtitle);
         } else {
             subtitleItem.setTitle(R.string.show_subtitle);
-        }
+        }*/
     }
 
     private void updateSubtitle() {
@@ -119,10 +134,24 @@ import java.util.UUID;
             startActivity(crimePagerintent);*/
             return true;
         } else if (item.getItemId() == R.id.show_subtitle) {
+            SharedPreferences userSession = getActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = userSession.edit();
+
+            Log.i("Checking session", userSession.getAll().toString());
+            editor.putBoolean("isAuthenticated", false);
+            editor.remove("email");
+            editor.apply();
+            Log.i("Checking session", userSession.getAll().toString());
+
+            final Intent intent = new Intent(getActivity(), Login.class);
+            startActivity(intent);
+
+            getActivity().finish();
+            /*
             mSubtitleVisible = !mSubtitleVisible;
             getActivity().invalidateOptionsMenu();
             updateSubtitle();
-            return true;
+            return true;*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -131,6 +160,15 @@ import java.util.UUID;
     @Override
     public void onResume() {
         super.onResume();
+        /*
+        SharedPreferences userSession = getActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+        boolean isAuthenticated = userSession.getBoolean("isAuthenticated", false);
+
+        final Intent intent;
+        if (isAuthenticated == false) {
+            intent = new Intent(getActivity(), Signup.class);
+            startActivity(intent);
+        }*/
         updateUI();
     }
 

@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.GPTRecipie" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/appPriamryColor</item>
-        <item name="colorPrimaryDark">@color/appPriamryDarkColor</item>
+        <item name="colorPrimary">@color/appPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/appPrimaryDarkColor</item>
         <item name="colorAccent">@color/appAccentColor</item>
     </style>
 

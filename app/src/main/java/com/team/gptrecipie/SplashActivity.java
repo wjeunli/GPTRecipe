@@ -3,12 +3,12 @@ package com.team.gptrecipie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.team.gptrecipie.activity.RecipeActivity;
 import com.team.gptrecipie.activity.RecipeListActivity;
-import com.team.gptrecipie.activity.RecipePagerActivity;
+import com.team.gptrecipie.activity.Signup;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,7 +19,15 @@ public class SplashActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        final Intent intent = new Intent(SplashActivity.this, RecipeListActivity.class);
+        SharedPreferences userSession = getSharedPreferences("UserSession", MODE_PRIVATE);
+        boolean isAuthenticated = userSession.getBoolean("isAuthenticated", false);
+
+        final Intent intent;
+        if (isAuthenticated) {
+            intent = new Intent(SplashActivity.this, RecipeListActivity.class);
+        } else {
+            intent = new Intent(SplashActivity.this, Signup.class);
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override

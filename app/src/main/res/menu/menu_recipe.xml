@@ -10,7 +10,7 @@
         app:showAsAction="ifRoom|withText"/>
     <item
         android:id="@+id/show_subtitle"
-        android:title="@string/show_subtitle"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/logout"
+        app:showAsAction="ifRoom" />
 
 </menu>

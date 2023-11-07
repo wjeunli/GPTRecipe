@@ -41,4 +41,17 @@
         <item quantity="other">%1$d recipes</item>
     </plurals>
     <string name="subtitle_format">%1$d recipes</string>
+    <string name="login_text">Login</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="password_confirm_hint" >Confirm password</string>
+    <string name="signup_text">Create an account</string>
+    <string name="app_logo_description">GPT Recipe logo</string>
+    <string name="sign_up_button_text">Sign up</string>
+    <string name="login_button_text">Sign in</string>
+    <string name="already_hava_an_account">You already have an account?</string>
+    <string name="login_redirect_text">Login</string>
+    <string name="create_an_account_text">Create an account?</string>
+    <string name="signup_redirect">Sign up</string>
+    <string name="logout">Logout</string>
 </resources>
