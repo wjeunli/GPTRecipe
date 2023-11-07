@@ -23,7 +23,6 @@ public class SplashActivity extends AppCompatActivity {
         boolean isAuthenticated = userSession.getBoolean("isAuthenticated", false);
 
         final Intent intent;
-        //isAuthenticated = true;
         if (isAuthenticated) {
             intent = new Intent(SplashActivity.this, RecipeListActivity.class);
         } else {

@@ -66,6 +66,8 @@ public class Signup extends AppCompatActivity {
                             final Intent intent = new Intent(Signup.this, RecipeListActivity.class);
                             startActivity(intent);
 
+                            finish();
+
                             Toast.makeText(Signup.this, "Welcome " + email, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(Signup.this, "Email already exists", Toast.LENGTH_SHORT).show();
@@ -82,6 +84,8 @@ public class Signup extends AppCompatActivity {
             public void onClick(View v) {
                 final Intent intent = new Intent(Signup.this, Login.class);
                 startActivity(intent);
+
+                finish();
             }
         });
     }
