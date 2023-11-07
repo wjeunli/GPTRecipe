@@ -20,7 +20,10 @@
         android:theme="@style/Theme.GPTRecipie"
         tools:targetApi="31">
         <activity
-            android:name=".Login"
+            android:name=".activity.Login"
+            android:exported="false" />
+        <activity
+            android:name=".activity.Signup"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
