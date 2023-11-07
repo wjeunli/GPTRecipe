@@ -2,6 +2,7 @@ package com.team.gptrecipie.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -22,7 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.team.gptrecipie.R;
+import com.team.gptrecipie.activity.Login;
 import com.team.gptrecipie.activity.RecipeActivity;
+import com.team.gptrecipie.activity.RecipeListActivity;
 import com.team.gptrecipie.dao.RecipeDAO;
 import com.team.gptrecipie.model.Recipe;
 
@@ -85,12 +88,12 @@ import java.util.UUID;
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_recipe, menu);
 
-        MenuItem subtitleItem = menu.findItem(R.id.show_subtitle);
+        /*MenuItem subtitleItem = menu.findItem(R.id.show_subtitle);
         if (mSubtitleVisible) {
             subtitleItem.setTitle(R.string.hide_subtitle);
         } else {
             subtitleItem.setTitle(R.string.show_subtitle);
-        }
+        }*/
     }
 
     private void updateSubtitle() {
@@ -119,10 +122,19 @@ import java.util.UUID;
             startActivity(crimePagerintent);*/
             return true;
         } else if (item.getItemId() == R.id.show_subtitle) {
+            SharedPreferences userSession = getActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = userSession.edit();
+
+            editor.putBoolean("isAuthenticated", false);
+            editor.remove("email");
+
+            final Intent intent = new Intent(getActivity(), Login.class);
+            startActivity(intent);
+            /*
             mSubtitleVisible = !mSubtitleVisible;
             getActivity().invalidateOptionsMenu();
             updateSubtitle();
-            return true;
+            return true;*/
         }
 
         return super.onOptionsItemSelected(item);
