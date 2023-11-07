@@ -77,7 +77,7 @@ public class GPTGenerateService {
             }
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Log.e(LOG_TAG, "error happended exception" + e.getMessage(), e);
         }
 
         return null;
